@@ -19,35 +19,17 @@
       <!-- NAVBAR -->
       <nav id="navbar">
         <div class="nav-links">
-          <ul>
-            <li>
-              <a id="a1" href="#section1"
-                ><span class="firstLetterNavItem">H</span>OME</a
-              >
-            </li>
-            <li>
-              <a id="a2" href="#section2"
-                ><span class="firstLetterNavItem">A</span>BOUT ME</a
-              >
-            </li>
-            <li>
-              <a id="a3" href="#section3"
-                ><span class="firstLetterNavItem">S</span>KILLS</a
-              >
-            </li>
-            <li>
-              <a id="a4" href="#section4"
-                ><span class="firstLetterNavItem">P</span>ROJECTS</a
-              >
-            </li>
-            <li>
-              <a id="a5" href="#section5"
-                ><span class="firstLetterNavItem">C</span>ONTACT</a
-              >
-            </li>
-          </ul>
+          <ul id="nav-list"></ul>
         </div>
       </nav>
+      <template id="nav-item-template">
+        <li>
+          <a class="nav-link" href="#section1">
+            <span class="firstLetterNavItem"></span
+            ><span class="nav-link-text"></span>
+          </a>
+        </li>
+      </template>
 
       <!-- SECTION 1 -->
       <section id="section1">
@@ -133,17 +115,10 @@
               ><span class="text-white">s</span>
             </h2>
           </div>
-          <div id="grid-container2">
-            <!-- SKILL CIRCLE -->
-            <div id="problem-solving"></div>
-            <div id="chatgpt"></div>
-            <div id="css"></div>
-            <div id="react"></div>
-            <div id="python"></div>
-            <div id="figma"></div>
-            <div id="html"></div>
-            <div id="javascript"></div>
-          </div>
+          <div id="grid-container2"></div>
+          <template id="skill-item-template">
+            <div class="skill-icon"></div>
+          </template>
         </div>
         <div class="overlay" id="overlay"></div>
       </section>
@@ -160,23 +135,10 @@
           </div>
           <div id="grid-container3">
             <div id="overlay2"></div>
-            <div
-              id="project1"
-              data-url="https://kodehode-stavanger.github.io/user-data-assignment-kodehodechristian/"
-            ></div>
-            <div
-              id="project2"
-              data-url="https://kodehode-stavanger.github.io/javascript-advanced-project-api-kodehodechristian/"
-            ></div>
-            <div
-              id="project3"
-              data-url="https://kodehode-stavanger.github.io/javascript-advanced-project-drum-machine-kodehodechristian/"
-            ></div>
-            <div
-              id="project4"
-              data-url="https://kodehodechristian.github.io/Cat_and_Mouse_Game/"
-            ></div>
           </div>
+          <template id="project-card-template">
+            <div class="project-card" data-url=""></div>
+          </template>
         </div>
       </section>
 
@@ -192,22 +154,10 @@
             </h2>
           </div>
           <!-- CONTACT ME -->
-          <div id="grid-container4">
-            <div id="epost-logo"></div>
-            <div id="epost">kodehodechristian@gmail.com</div>
-            <div id="mobil-logo"></div>
-            <div id="mobil">mob. 949 88 744</div>
-            <div id="git">Git</div>
-            <div
-              id="git-logo"
-              data-url="https://github.com/kodehodechristian"
-            ></div>
-            <div id="hub">hub</div>
-            <div
-              id="cv-pdf-logo"
-              data-url="https://github.com/kodehodechristian/Kodehode-Portfolio-CE/blob/main/CV-Christian.Ernst.pdf"
-            ></div>
-          </div>
+          <div id="grid-container4"></div>
+          <template id="contact-item-template">
+            <div></div>
+          </template>
         </div>
       </section>
     </div>
