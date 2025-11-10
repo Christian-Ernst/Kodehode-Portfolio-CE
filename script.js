@@ -181,6 +181,33 @@ document.addEventListener("DOMContentLoaded", () => {
     skillElement.addEventListener("blur", hideOverlay);
   });
 
+  const updateSkillRing = () => {
+    if (!skillGrid) {
+      return;
+    }
+
+    const width = skillGrid.clientWidth;
+    if (!width) {
+      return;
+    }
+
+    const computedStyle = getComputedStyle(skillGrid);
+    const iconSize = parseFloat(computedStyle.getPropertyValue("--icon-size"));
+    const ringOffset = parseFloat(
+      computedStyle.getPropertyValue("--ring-offset")
+    );
+
+    if (Number.isNaN(iconSize) || Number.isNaN(ringOffset)) {
+      return;
+    }
+
+    const radius = width / 2 - iconSize / 2 - ringOffset;
+    skillGrid.style.setProperty("--radius", `${radius}px`);
+  };
+
+  updateSkillRing();
+  window.addEventListener("resize", updateSkillRing);
+
   projects.forEach((project) => {
     const projectElement = createFromTemplate(
       projectTemplate,

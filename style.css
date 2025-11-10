@@ -458,7 +458,6 @@ html {
   justify-content: center;
   --icon-size: clamp(80px, 12vw, 140px);
   --ring-offset: clamp(12px, 2vw, 24px);
-  --radius: calc(50% - (var(--icon-size) / 2) - var(--ring-offset));
 }
 
 .skill-icon {
