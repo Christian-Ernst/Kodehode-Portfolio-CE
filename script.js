@@ -21,9 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
     return element;
   };
 
-  const showOverlay = (text) => {
-    overlay.textContent = text;
-    overlay.classList.add("visible");
+  const showOverlay = (text, target) => {
+    overlay.innerText = text;
+    const targetRect = target.getBoundingClientRect();
+    const parentRect = overlay.parentElement.getBoundingClientRect();
+
+    overlay.style.display = "block";
+
+    const top = targetRect.bottom - parentRect.top + 12;
+    const desiredLeft =
+      targetRect.left - parentRect.left + targetRect.width / 2;
+    const halfWidth = overlay.offsetWidth / 2;
+    const maxLeft = parentRect.width - halfWidth - 16;
+    const minLeft = halfWidth + 16;
+    const leftBoundsOverlap = maxLeft < minLeft;
+    const left = leftBoundsOverlap
+      ? parentRect.width / 2
+      : Math.min(maxLeft, Math.max(minLeft, desiredLeft));
+
+    overlay.style.top = `${top}px`;
+    overlay.style.left = `${left}px`;
   };
 
   const hideOverlay = () => {
@@ -157,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
       element.setAttribute("tabindex", "0");
     });
     skillElement.addEventListener("mouseenter", () =>
-      showOverlay(skill.description)
+      showOverlay(skill.description, skillElement)
     );
     skillElement.addEventListener("mouseleave", hideOverlay);
     skillElement.addEventListener("focus", () => showOverlay(skill.description));

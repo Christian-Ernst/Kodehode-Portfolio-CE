@@ -450,8 +450,7 @@ html {
 
 #grid-container2 {
   position: relative;
-  --circle-size: min(80vw, 520px);
-  width: var(--circle-size);
+  width: min(80vw, 520px);
   aspect-ratio: 1 / 1;
   margin: 0 auto;
   display: flex;
@@ -459,7 +458,7 @@ html {
   justify-content: center;
   --icon-size: clamp(80px, 12vw, 140px);
   --ring-offset: clamp(12px, 2vw, 24px);
-  --radius: calc((var(--circle-size) / 2) - (var(--icon-size) / 2) - var(--ring-offset));
+  --radius: calc(50% - (var(--icon-size) / 2) - var(--ring-offset));
 }
 
 .skill-icon {
@@ -472,17 +471,16 @@ html {
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
-  transform-origin: center;
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--radius))
-    rotate(calc(-1 * var(--angle)));
+  transform: translate(-50%, -50%) rotate(var(--angle))
+    translate(var(--radius)) rotate(calc(-1 * var(--angle)));
   transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
 }
 
 .skill-icon:hover,
 .skill-icon:focus-visible {
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
-  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--radius))
-    rotate(calc(-1 * var(--angle))) scale(1.05);
+  transform: translate(-50%, -50%) rotate(var(--angle))
+    translate(var(--radius)) rotate(calc(-1 * var(--angle))) scale(1.05);
 }
 
 #problem-solving {
@@ -522,7 +520,29 @@ html {
 
 #javascript {
   background: url("images/3_skills/JavaScript.png") no-repeat center / contain;
-  --angle: -135deg;
+}
+
+.skill-icon {
+  width: min(12vh, 10vw);
+  aspect-ratio: 1 / 1;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 50%;
+  background-color: rgba(240, 226, 213, 0.6);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.skill-icon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .overlay {
@@ -533,20 +553,13 @@ html {
   font-weight: 500;
   padding: 12px 18px;
   border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  transform: translateX(-50%);
   pointer-events: none;
-  max-width: min(520px, 80vw);
+  max-width: min(280px, 70vw);
   text-align: center;
   line-height: 1.4;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  align-self: center;
-}
-
-.overlay.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* MEDIA QUERY */
