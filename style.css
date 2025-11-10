@@ -520,7 +520,29 @@ html {
 
 #javascript {
   background: url("images/3_skills/JavaScript.png") no-repeat center / contain;
-  --angle: -135deg;
+}
+
+.skill-icon {
+  width: min(12vh, 10vw);
+  aspect-ratio: 1 / 1;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 50%;
+  background-color: rgba(240, 226, 213, 0.6);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.skill-icon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .overlay {
@@ -531,20 +553,13 @@ html {
   font-weight: 500;
   padding: 12px 18px;
   border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  transform: translateX(-50%);
   pointer-events: none;
-  max-width: min(520px, 80vw);
+  max-width: min(280px, 70vw);
   text-align: center;
   line-height: 1.4;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  align-self: center;
-}
-
-.overlay.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* MEDIA QUERY */
