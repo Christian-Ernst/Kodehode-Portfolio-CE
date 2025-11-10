@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ),
     sections = document.querySelectorAll("section"),
     overlay = document.getElementById("overlay"),
+    navbar = document.getElementById("navbar"),
     navList = document.getElementById("nav-list"),
     navItemTemplate = document.getElementById("nav-item-template"),
     skillGrid = document.getElementById("grid-container2"),
@@ -21,12 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const showOverlay = (text) => {
-    overlay.innerText = text;
-    overlay.style.display = "block";
+    overlay.textContent = text;
+    overlay.classList.add("visible");
   };
 
   const hideOverlay = () => {
-    overlay.style.display = "none";
+    overlay.classList.remove("visible");
+    overlay.textContent = "";
   };
 
   const attachExternalLink = (element) => {
@@ -35,6 +37,25 @@ document.addEventListener("DOMContentLoaded", () => {
         window.open(element.dataset.url, "_blank");
       });
     }
+  };
+
+  const applyBackgroundEffects = (shouldDim) => {
+    if (!backgroundContainer) {
+      return;
+    }
+
+    backgroundContainer.classList.toggle("darkened", shouldDim);
+    backgroundContainer.classList.toggle("blurred", shouldDim);
+  };
+
+  const updateCloudAppearance = () => {
+    if (!navbar) {
+      return;
+    }
+
+    const fadeProgress = Math.min(Math.max(window.scrollY / 300, 0), 1);
+    const opacity = 1 - fadeProgress * 0.85;
+    navbar.style.setProperty("--cloud-opacity", opacity.toFixed(2));
   };
 
   const navItems = [
@@ -90,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: "project4",
-      url: "https://kodehodechristian.github.io/Cat_and_Mouse_Game/",
+      url: "https://christian-ernst.github.io/Cat_and_Mouse_Game/",
     },
   ];
 
@@ -133,9 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
   skills.forEach((skill) => {
     const skillElement = createFromTemplate(skillTemplate, skillGrid, (element) => {
       element.id = skill.id;
+      element.setAttribute("tabindex", "0");
     });
-    skillElement.addEventListener("mouseenter", () => showOverlay(skill.description));
+    skillElement.addEventListener("mouseenter", () =>
+      showOverlay(skill.description)
+    );
     skillElement.addEventListener("mouseleave", hideOverlay);
+    skillElement.addEventListener("focus", () => showOverlay(skill.description));
+    skillElement.addEventListener("blur", hideOverlay);
   });
 
   projects.forEach((project) => {
@@ -183,8 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       const targetSection = link.getAttribute("href").substring(1);
       const isSection1 = targetSection === "section1";
-      backgroundContainer.classList.toggle("darkened", !isSection1);
-      backgroundContainer.style.filter = isSection1 ? "none" : "blur(10px)";
+      applyBackgroundEffects(!isSection1);
+      updateCloudAppearance();
 
       updateActiveNavLink(link);
 
@@ -199,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const updateActiveNavLinkOnScroll = () => {
-    let currentSectionId = "";
+    let currentSectionId = sections[0]?.getAttribute("id") ?? "section1";
     sections.forEach((section) => {
       if (window.scrollY >= section.offsetTop - section.clientHeight / 3) {
         currentSectionId = section.getAttribute("id");
@@ -212,6 +238,9 @@ document.addEventListener("DOMContentLoaded", () => {
         link.getAttribute("href").substring(1) === currentSectionId
       );
     });
+
+    applyBackgroundEffects(currentSectionId !== "section1");
+    updateCloudAppearance();
   };
 
   window.addEventListener("scroll", updateActiveNavLinkOnScroll);
