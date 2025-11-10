@@ -471,9 +471,26 @@ html {
 }
 
 .skill-icon {
-  height: 12vh;
-  width: 10vw;
-  min-width: 80px;
+  width: min(12vh, 10vw);
+  aspect-ratio: 1 / 1;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 50%;
+  background-color: rgba(240, 226, 213, 0.6);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.skill-icon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .overlay {
@@ -483,14 +500,15 @@ html {
   color: #151110;
   font-family: "Inconsolata";
   font-weight: 500;
-  padding: 20px;
-  margin: 0, auto;
+  padding: 12px 18px;
   border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
   z-index: 100;
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+  pointer-events: none;
+  max-width: min(280px, 70vw);
+  text-align: center;
+  line-height: 1.4;
 }
 
 /* MEDIA QUERY */
