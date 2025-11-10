@@ -40,6 +40,10 @@ html {
   opacity: 0.5;
 }
 
+.background-image-container.blurred {
+  filter: blur(10px);
+}
+
 .content-container {
   position: relative;
   z-index: 2;
@@ -50,13 +54,32 @@ html {
 #navbar {
   position: fixed;
   top: 0;
-  background-image: url("images/0_navbar_&_background/Clouds_only_h150cutTOPpx.png");
-  background-size: cover;
-  background-position: center;
   z-index: 1000;
   width: 100vw;
   min-height: 15vh;
   max-height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  --cloud-opacity: 1;
+}
+
+#navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("images/0_navbar_&_background/Clouds_only_h150cutTOPpx.png");
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.3s ease;
+  opacity: var(--cloud-opacity, 1);
+  z-index: -1;
+}
+
+.nav-links {
+  position: relative;
+  width: 100%;
 }
 
 .firstLetterNavItem {
@@ -380,7 +403,7 @@ html {
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   min-height: 100vh;
   width: 100vw;
   margin: 0 auto;
@@ -427,70 +450,103 @@ html {
 
 #grid-container2 {
   position: relative;
-  display: grid;
-  justify-content: center;
+  --circle-size: min(80vw, 520px);
+  width: var(--circle-size);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  display: flex;
   align-items: center;
-  grid-template-columns: repeat(11, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 1vw;
-}
-
-/* GRID ITEMS */
-
-#problem-solving {
-  grid-area: 1 / 5 / 2 / 8;
-  background: url("images/3_skills/Brain.png") no-repeat center / contain;
-}
-#chatgpt {
-  grid-area: 2 / 7 / 3 / 10;
-  background: url("images/3_skills/ChatGPT.png") no-repeat center / contain;
-}
-#css {
-  grid-area: 3 / 9 / 4 / 12;
-  background: url("images/3_skills/CSS.png") no-repeat center / contain;
-}
-#react {
-  grid-area: 4 / 7 / 5 / 10;
-  background: url("images/3_skills/React.png") no-repeat center / contain;
-}
-#python {
-  grid-area: 5 / 5 / 6 / 8;
-  background: url("images/3_skills/Python.png") no-repeat center / contain;
-}
-#figma {
-  grid-area: 4 / 3 / 5 / 6;
-  background: url("images/3_skills/Figma.png") no-repeat center / contain;
-}
-#html {
-  grid-area: 3 / 1 / 4 / 4;
-  background: url("images/3_skills/HTML.png") no-repeat center / contain;
-}
-#javascript {
-  grid-area: 2 / 3 / 3 / 6;
-  background: url("images/3_skills/JavaScript.png") no-repeat center / contain;
+  justify-content: center;
+  --icon-size: clamp(80px, 12vw, 140px);
+  --ring-offset: clamp(12px, 2vw, 24px);
+  --radius: calc((var(--circle-size) / 2) - (var(--icon-size) / 2) - var(--ring-offset));
 }
 
 .skill-icon {
-  height: 12vh;
-  width: 10vw;
-  min-width: 80px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--radius))
+    rotate(calc(-1 * var(--angle)));
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.skill-icon:hover,
+.skill-icon:focus-visible {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--radius))
+    rotate(calc(-1 * var(--angle))) scale(1.05);
+}
+
+#problem-solving {
+  background: url("images/3_skills/Brain.png") no-repeat center / contain;
+  --angle: -90deg;
+}
+
+#chatgpt {
+  background: url("images/3_skills/ChatGPT.png") no-repeat center / contain;
+  --angle: -45deg;
+}
+
+#css {
+  background: url("images/3_skills/CSS.png") no-repeat center / contain;
+  --angle: 0deg;
+}
+
+#react {
+  background: url("images/3_skills/React.png") no-repeat center / contain;
+  --angle: 45deg;
+}
+
+#python {
+  background: url("images/3_skills/Python.png") no-repeat center / contain;
+  --angle: 90deg;
+}
+
+#figma {
+  background: url("images/3_skills/Figma.png") no-repeat center / contain;
+  --angle: 135deg;
+}
+
+#html {
+  background: url("images/3_skills/HTML.png") no-repeat center / contain;
+  --angle: 180deg;
+}
+
+#javascript {
+  background: url("images/3_skills/JavaScript.png") no-repeat center / contain;
+  --angle: -135deg;
 }
 
 .overlay {
-  display: none;
-  position: absolute;
-  background-color: #f0e2d5;
+  margin-top: clamp(20px, 4vw, 32px);
+  background-color: rgba(240, 226, 213, 0.95);
   color: #151110;
   font-family: "Inconsolata";
   font-weight: 500;
-  padding: 20px;
-  margin: 0, auto;
+  padding: 12px 18px;
   border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  left: 50%;
-  top: 60%;
-  transform: translate(-50%, -50%);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+  max-width: min(520px, 80vw);
+  text-align: center;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  align-self: center;
+}
+
+.overlay.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* MEDIA QUERY */
